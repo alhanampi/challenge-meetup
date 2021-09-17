@@ -1,0 +1,17 @@
+/* resets, fonts, color palette */
+
+  $red: #ec0000;
+  $dark-grey: #333333;
+  $medium-grey: #6d6d6d;
+  $light-grey: #c2c2c2;
+  $white: #f0f0f0;
+
+  :root {
+   --red: #{$red};
+   --dark-grey: #{$dark-grey};
+   --medium-grey: #{$medium-grey};
+   --light-grey: #{$light-grey};
+   --white: #{$white};
+  }
+  
+  
