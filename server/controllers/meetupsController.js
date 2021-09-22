@@ -8,6 +8,7 @@ const getMeetups = async (req, res) => {
     res.json(meetups);
     //to test it: pass the token of one of the users
   } catch (error) {
+    console.log(error);
     res.status(500).send("server error");
   }
 };
@@ -24,6 +25,7 @@ const postMeetups = async (req, res) => {
     const meetup = await newMeetup.save();
     res.json(meetup);
   } catch (error) {
+    console.log(error);
     res.status(500).send("server error");
   }
 };

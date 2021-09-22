@@ -8,8 +8,8 @@ import "./Home.scss";
 const Home = () => {
   return (
     <>
-      <Container className="mt-5" fluid>
-        <Row>
+      <Container className="mt-5 home" fluid>
+        <Row className="homeRow">
           <Col>
             <h2> Bienvenido a nuestra app de meetups</h2>
             <h3 className="mb-5">Registrate o logueate, y vas a poder organizar tus eventos</h3>

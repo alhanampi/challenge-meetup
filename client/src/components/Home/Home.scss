@@ -1,5 +1,14 @@
 @import "../../styles/main";
 
+.home{
+  .homeRow {
+    .col {
+      text-align: left;
+
+    }
+  }
+}
+
 button.newMeet, button.login {
     @include buttonBase;
     color: $white;
@@ -33,5 +42,20 @@ button.newMeet, button.login {
     &:hover {
         background-color: $red;
         color: $white;
+    }
+  }
+
+  
+  @media (max-width: 1280px) {
+    .home{
+      .homeRow {
+        .col {
+          text-align: center;
+          button {
+            margin: auto;
+            margin-bottom: 2%;
+          }
+        }
+      }
     }
   }

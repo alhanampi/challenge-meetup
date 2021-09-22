@@ -1,23 +1,32 @@
-import React, {useContext} from "react";
-import { Container, Card, Row, Col } from "react-bootstrap";
+import React, { useContext, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import "./Home.scss";
 import MeetupContext from "../../context/meetupContext/meetupContext";
+import Meet from "./MeetCard/Meet";
 
 const IncomingMeetups = () => {
-  const { getMeetups } = useContext(MeetupContext);
+  const { meetups, getMeetups } = useContext(MeetupContext);
+  console.log("meetups:", meetups);
+
+  useEffect(() => {
+    getMeetups();
+  }, []);
 
   return (
     <Container fluid>
       <h3>Estos son tus próximos eventos!</h3>
-      <Row>
-        <Col xs={12} md={5} lg={3}>
-          <Card>
-            <Card.Text>Cantidad de invitados: 55</Card.Text>
-            <Card.Text>Clima previsto: 26º</Card.Text>
-            <Card.Text>Cantidad de 6-pack: 18</Card.Text>
-            <Card.Footer>Te esperamos!</Card.Footer>
-          </Card>
-        </Col>
+      <Row className="mt-5">
+          {meetups.length === 0 ? (
+            <h4>Todavía no tenés eventos!</h4>
+          ) : (
+            <>
+              {meetups.map((meets, index) => (
+            <Col xs={12} md={5} lg={3} className="mb-3">
+                <Meet meets={meets} index={index} />
+              </Col>
+              ))}
+            </>
+          )}
       </Row>
     </Container>
   );

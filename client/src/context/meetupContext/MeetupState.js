@@ -14,8 +14,14 @@ const MeetupState = (props) => {
 
   //get all
   const getMeetups = async () => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
     try {
-      const res = await axios.get("/api/meetups");
+      const res = await axios.get("/api/meetups", config);
+      
       dispatch({
         type: GET_MEETUPS,
         payload: res.data,
@@ -36,7 +42,7 @@ const MeetupState = (props) => {
       },
     };
     try {
-      const res = await axios.post("/api/meetups/post", meetupData, config);
+      const res = await axios.post("/api/meetups", meetupData, config);
       dispatch({
         type: ADD_MEETUP,
         payload: res.data,
@@ -60,7 +66,7 @@ const MeetupState = (props) => {
   return (
     <MeetupContext.Provider
       value={{
-        meetup: state.meetup,
+        meetups: state.meetups,
         error: state.error,
         getMeetups,
         addMeetup,

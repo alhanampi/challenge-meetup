@@ -1,4 +1,4 @@
-import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/shr/Navbar";
 import Home from "./components/Home/Home";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
@@ -9,7 +9,7 @@ import AuthState from "./context/authContext/AuthState";
 import MeetupState from "./context/meetupContext/MeetupState";
 import setAuthToken from "./utils/utilSetAuthToken";
 import PrivateRoutes from "./utils/utilPrivateRoutes";
-import UtilClimate from "./utils/utilClimate";
+import Footer from "./components/shr/Footer";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -17,11 +17,10 @@ if (localStorage.token) {
 
 function App() {
   return (
-    <MeetupState>
-      <AuthState>
+    <AuthState>
+      <MeetupState>
         <Router>
           <Navbar />
-          <UtilClimate />
           <Switch>
             {/* public routes */}
             <Route exact path="/" component={Home} />
@@ -32,9 +31,10 @@ function App() {
             <PrivateRoutes exact path="/user" component={LoginHome} />
             <PrivateRoutes exact path="/admin" component={AdminScreen} />
           </Switch>
+          <Footer />
         </Router>
-      </AuthState>
-    </MeetupState>
+      </MeetupState>
+    </AuthState>
   );
 }
 

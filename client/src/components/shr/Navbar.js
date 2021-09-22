@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "./Navbar.scss";
+import "./shr.scss";
 import Logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +7,7 @@ import { faBars, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import AuthContext from "../../context/authContext/authContext";
 
 const Navbar = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, logoutUser } = useContext(AuthContext);
 
   return (
     <>
@@ -17,11 +17,21 @@ const Navbar = () => {
           Menú
         </span>
         <span>
+          <Link to="/" >
           <img src={Logo} alt="" className="logo" />
+
+          </Link>
         </span>
         <span className="user">
           {isAuthenticated ? (
-            <p>Hola!</p>
+            <>
+            <button className="user register" onClick={logoutUser}>
+                <Link to="/" className="link">
+                  Logout
+                  <FontAwesomeIcon icon={faChevronRight} className="userIcon" />
+                </Link>
+              </button>
+              </>
           ) : (
             <>
               <button className="user login">
