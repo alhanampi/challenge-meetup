@@ -5,8 +5,6 @@ import Github from "../../assets/logos/github.png";
 import { Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBars,
-  faChevronRight,
   faEnvelope,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";

@@ -11,16 +11,16 @@ const meetupSchema = new mongoose.Schema({
       type: Date,
       required: true,
     },
-    guestAmount: {
-      type: Number,
+    guests: {
+      type: String,
       required: true,
     },
-    climate: {
-      type: Number,
+    temp: {
+      type: String,
       required: true,
     },
     beerAmount: {
-      type: Number,
+      type: String,
       required: true,
     },
     email: {

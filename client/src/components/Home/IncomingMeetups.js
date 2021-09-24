@@ -16,17 +16,17 @@ const IncomingMeetups = () => {
     <Container fluid>
       <h3>Estos son tus próximos eventos!</h3>
       <Row className="mt-5">
-          {meetups.length === 0 ? (
-            <h4>Todavía no tenés eventos!</h4>
-          ) : (
-            <>
-              {meetups.map((meets, index) => (
-            <Col xs={12} md={5} lg={3} className="mb-3">
-                <Meet meets={meets} index={index} />
+        {meetups.length === 0 ? (
+          <h4>Todavía no tenés eventos!</h4>
+        ) : (
+          <>
+            {meetups.map((meets, index) => (
+              <Col xs={12} md={5} lg={3} className="mb-3" index={index}>
+                <Meet meets={meets} />
               </Col>
-              ))}
-            </>
-          )}
+            ))}
+          </>
+        )}
       </Row>
     </Container>
   );

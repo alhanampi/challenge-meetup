@@ -1,4 +1,4 @@
-import { ADD_MEETUP, GET_MEETUPS, MEETUP_ERROR } from "../types";
+import { ADD_MEETUP, GET_MEETUPS, GET_TEMP, MEETUP_ERROR } from "../types";
 
 export default (state, { type, payload }) => {
   switch (type) {
@@ -18,6 +18,12 @@ export default (state, { type, payload }) => {
         ...state,
         meetups: [],
         error: payload,
+      };
+    case GET_TEMP:
+      return {
+        ...state,
+        temp: payload,
+        error: null,
       };
     default:
       return state;

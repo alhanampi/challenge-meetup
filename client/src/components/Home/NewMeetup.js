@@ -3,65 +3,68 @@ import { Form, Container, Alert } from "react-bootstrap";
 import "./Home.scss";
 import { beerAmountCount } from "../../utils/utilBirras";
 import MeetupContext from "../../context/meetupContext/meetupContext";
-// import {UtilClimate} from "../../utils/utilClimate";
 import {
   getToday,
   getFortnight,
   mediumConvertIsoToDays,
+  daysFromToday,
 } from "../../utils/utilDate";
 
 const NewMeetup = () => {
-  const { addMeetup } = useContext(MeetupContext);
+  const { addMeetup, getTemp, temp } = useContext(MeetupContext);
 
-  const [climate, setclimate] = useState(24);
+  const [degrees, setDegrees] = useState(26);
   const [beerAmount, setBeerAmount] = useState(0);
+  const [guestsAmount, setGuestsAmount] = useState(0);
+  const [daysFromNow, setDaysFromNow] = useState(0);
   const [newMeet, setNewMeet] = useState({
     date: "",
     guests: "",
     email: "",
-    beer: "",
+    temp: "",
+    beerAmount: "",
   });
 
-  const { date, guests, email, beer } = newMeet;
+  const { date, guests, email, beer, climate} = newMeet;
 
+  //envío la cantidad de días a futuro en que va a ser el evento
+  useEffect(() => {
+    const today = new Date(Date.now());
+    const meetupDay = new Date(date);
+    const diff = daysFromToday(today, meetupDay) + 1;
+    setDaysFromNow(diff);
+    getTemp(daysFromNow);
+    setDegrees(temp);
+  }, [date]);
 
+  useEffect(() => {
+    setGuestsAmount(guests);
+  }, [guests]);
+
+  useEffect(() => {
+    let totalBeer = beerAmountCount(degrees, guests);
+    setBeerAmount(totalBeer);
+  }, [degrees, guests, beer, climate]);
 
   const handleChange = (e) => {
-    setNewMeet({ ...newMeet, [e.target.name]: e.target.value });
+    setNewMeet({ ...newMeet, [e.target.name]: e.target.value }, temp, beerAmount);
+    console.log("newMeet", newMeet);
   };
 
   const handleSubmit = (e) => {
-
     e.preventDefault();
+    setNewMeet({
+      date: "",
+      guests: "",
+      email: "",
+      temp: "",
+      beerAmount: "",
+    });
     addMeetup(newMeet);
-    console.log(newMeet);
   };
-
-  // const getClimate =(date)=> {
-  //   //la idea es sacar la diferencia entre la fecha actual y la ingresada, luego recorrer el array que devuelva el util de clima y tomar el temp que corresponda a ese índice
-
-  //   const meetupDate = date
-  //   const getDays = getToday - date
-
-  //   UtilClimate(climate)
-  //   setclimate()
-  // }
-
-  //una vez que tenga la temperatura con getClimate, puedo pasar esos datos para hacer el cálculo
-  const beerTotal = () => {
-    beerAmountCount(25, 3);
-    setBeerAmount(beerAmountCount);
-    console.log(beerAmount);
-  };
-
-  useEffect(() => {
-    beerTotal()
-    
-  }, [])
 
   return (
     <Container fluid className="p-3">
-      {/* <UtilClimate /> */}
       <h3 className="mb-5">Creá un nuevo evento!</h3>
 
       <Form action="post">
@@ -83,7 +86,8 @@ const NewMeetup = () => {
         </Form.Group>
         {date && (
           <p>
-            Buena fecha! El <strong> {mediumConvertIsoToDays(date)}</strong> va a hacer {climate} grados!
+            Buena fecha! El <strong> {mediumConvertIsoToDays(date)}</strong> va
+            a hacer {temp} grados!
           </p>
         )}
 
@@ -96,7 +100,8 @@ const NewMeetup = () => {
               name="guests"
               value={guests}
               onChange={handleChange}
-              placeholder="5"
+              placeholder="todos tus amigos!"
+              min={1}
               required
             />
           </Form.Label>
@@ -117,15 +122,46 @@ const NewMeetup = () => {
           </Form.Label>
         </Form.Group>
 
-{beerAmount !== 0 &&
-        <Alert variant="dark">
-          <Alert.Heading>Ya casi estás!</Alert.Heading>
-          <p>
-            Vamos a prepararte <strong>{ beerAmount}</strong> 6-pack de cerveza!
-            No te preocupes, nosotros nos ocupamos de todo por vos.
-          </p>
-        </Alert>
-    }
+        {/* hidden inputs to get the amounts */}
+
+        <Form.Group className="displayNone" >
+          <Form.Label>
+            Cerveza
+            <Form.Control
+              type="number"
+              name="beerAmount"
+              value={beerAmount}
+              onChange={handleChange}
+              min={1}
+              disabled
+            />
+          </Form.Label>
+        </Form.Group>
+
+        <Form.Group className="displayNone" >
+          <Form.Label>
+            Temperatura
+            <Form.Control
+              type="number"
+              name="temp"
+              value={temp}
+              onChange={handleChange}
+              min={1}
+              disabled
+            />
+          </Form.Label>
+        </Form.Group>
+
+        {beerAmount != 0 && (
+          <Alert variant="dark">
+            <Alert.Heading>Ya casi estás!</Alert.Heading>
+            <p>
+              Vamos a prepararte <strong>{beerAmount}</strong> 6-pack de cerveza
+              para tus {guestsAmount} amigos! No te preocupes, nosotros nos
+              ocupamos de todo por vos.
+            </p>
+          </Alert>
+        )}
 
         <button className="newMeet mt-3" onClick={handleSubmit}>
           Creá tu evento!

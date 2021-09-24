@@ -45,6 +45,9 @@ button.newMeet, button.login {
     }
   }
 
+  .displayNone {
+    display: none;
+  }
   
   @media (max-width: 1280px) {
     .home{
@@ -59,3 +62,4 @@ button.newMeet, button.login {
       }
     }
   }
+  

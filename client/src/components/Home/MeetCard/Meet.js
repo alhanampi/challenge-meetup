@@ -6,7 +6,7 @@ const Meet = ({ index, meets }) => {
   const { email, guestAmount, climate, beerAmount, date } = meets;
   return (
     <>
-      <Card key={index}>
+      <Card index={index}>
         <Card.Header>
           <Card.Title>Anfitrión: {email}</Card.Title>
         </Card.Header>

@@ -10,7 +10,7 @@ const LoginHome = () => {
 
     useEffect(() => {
       loadUser()
-      console.log(loadUser)
+      console.log('loadUser:', loadUser)
     }, [])
     
     //bootstrap boilerplate for the tabs

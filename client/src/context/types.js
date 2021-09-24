@@ -12,4 +12,5 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const MEETUP_ERROR = "MEETUP_ERROR"
 //meetups
 export const ADD_MEETUP = "ADD_MEETUP";
-export const GET_MEETUPS = "GET MEETUPS";
+export const GET_MEETUPS = "GET_MEETUPS";
+export const GET_TEMP = 'GET_TEMP'

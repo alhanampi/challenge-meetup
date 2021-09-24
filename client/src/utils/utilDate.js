@@ -48,3 +48,26 @@ export const getFortnight = () => {
     .split("T")[0];
   return nextWeeks;
 };
+
+//21/09-2021
+export const convertToNumDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  };
+  const toDays = date.toLocaleDateString("es-AR", options);
+  return toDays;
+};
+
+//diff between two dates
+export const daysFromToday = (num1, num2) => {
+  const millisec = 1000 * 60 * 60 * 24;
+
+  const date1 = Date.UTC(num1.getFullYear(), num1.getMonth(), num1.getDate());
+  const date2 = Date.UTC(num2.getFullYear(), num2.getMonth(), num2.getDate());
+
+  return Math.floor((date2 - date1) / millisec);
+};
