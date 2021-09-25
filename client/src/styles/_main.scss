@@ -6,8 +6,13 @@
   margin: 0;
 }
 
-//colors
+.appWrapper {
+  min-height: calc(100vh - 120px);
+}
 
+
+
+//colors
 $red: #ec0000;
 $dark-grey: #333333;
 $medium-grey: #6d6d6d;
@@ -52,3 +57,4 @@ body a {
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
 }
+

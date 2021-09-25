@@ -17,15 +17,15 @@ const LoginHome = () => {
     const [key, setKey] = useState('home');
 
   return (
-    <>
-      <h2> Bienvenido!</h2>
-      <h3>Qué querés hacer hoy?</h3>
+    <div className="p-3">
+      <h2 className="mt-3"> Bienvenido!</h2>
+      <h3 className="mt-3">Qué querés hacer hoy?</h3>
 
       <Tabs
       id="controlled-tab-example"
       activeKey={key}
       onSelect={(k) => setKey(k)}
-      className="mb-3"
+      className="mb-3 mt-5"
       >
         <Tab eventKey="home" title="Nueva Meetup" className="meetTab">
           <NewMeetup />
@@ -34,7 +34,7 @@ const LoginHome = () => {
           <IncomingMeetups />
         </Tab>
       </Tabs>
-    </>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./Auth.scss";
-import { Form, Container, Row, Col, Image } from "react-bootstrap";
+import { Form, Container, Row, Col, Image, Alert } from "react-bootstrap";
 import Beer from "../../assets/beer.jpg";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/authContext/authContext";
@@ -66,6 +66,8 @@ const Register = (props) => {
                   value={name}
                   onChange={handleChange}
                   placeholder="Juan Gomez"
+                  minLength="5"
+                  maxLength="20"
                   required
                 />
               </Form.Label>
@@ -81,6 +83,7 @@ const Register = (props) => {
                   value={email}
                   onChange={handleChange}
                   placeholder="juan@gmail.com"
+                  pattern="[^@\s]+@[^@\s]+"
                   required
                 />
               </Form.Label>
@@ -96,6 +99,7 @@ const Register = (props) => {
                   value={password}
                   onChange={handleChange}
                   placeholder="elegí algo bien seguro!"
+                  minLength="5"
                   required
                 />
               </Form.Label>
@@ -111,10 +115,17 @@ const Register = (props) => {
                   value={password2}
                   onChange={handleChange}
                   placeholder="tu password tiene que coincidir"
+                  minLength="5"
                   required
                 />
               </Form.Label>
             </Form.Group>
+
+            <Alert variant="dark">
+            <p>
+              Acordate de poner un mail válido y un password de al menos 5 caracteres.
+            </p>
+          </Alert>
 
             <button className="newRegister" onClick={handleSubmit}>
               Registrate

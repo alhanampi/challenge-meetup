@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Form, Container, Alert } from "react-bootstrap";
 import "./Home.scss";
-import { beerAmountCount } from "../../utils/utilBirras";
 import MeetupContext from "../../context/meetupContext/meetupContext";
+import { beerAmountCount } from "../../utils/utilBirras";
 import {
   getToday,
   getFortnight,
@@ -13,7 +13,7 @@ import {
 const NewMeetup = () => {
   const { addMeetup, getTemp, temp } = useContext(MeetupContext);
 
-  const [degrees, setDegrees] = useState(26);
+  const [degrees, setDegrees] = useState(0);
   const [beerAmount, setBeerAmount] = useState(0);
   const [guestsAmount, setGuestsAmount] = useState(0);
   const [daysFromNow, setDaysFromNow] = useState(0);
@@ -21,13 +21,14 @@ const NewMeetup = () => {
     date: "",
     guests: "",
     email: "",
-    temp: "",
-    beerAmount: "",
+    climate: "",
+    beerTotal: "",
   });
+  const [done, setDone] = useState(false);
 
-  const { date, guests, email, beer, climate} = newMeet;
+  const { date, guests, email, beer, climate } = newMeet;
 
-  //envío la cantidad de días a futuro en que va a ser el evento
+  //send how many days from not, to capture the climate api object for that particular date
   useEffect(() => {
     const today = new Date(Date.now());
     const meetupDay = new Date(date);
@@ -41,28 +42,44 @@ const NewMeetup = () => {
     setGuestsAmount(guests);
   }, [guests]);
 
+  //calculate required amount of beer
   useEffect(() => {
     let totalBeer = beerAmountCount(degrees, guests);
     setBeerAmount(totalBeer);
   }, [degrees, guests, beer, climate]);
 
   const handleChange = (e) => {
-    setNewMeet({ ...newMeet, [e.target.name]: e.target.value }, temp, beerAmount);
-    console.log("newMeet", newMeet);
+    setNewMeet({ ...newMeet, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    //save data in a temporal object
+    const newMeetTemp = {
+      date: date,
+      guests: guestsAmount,
+      email: email,
+      climate: degrees,
+      beerTotal: beerAmount,
+    };
+    //set it in useState and send it to backend
+    setNewMeet(newMeetTemp);
+    addMeetup(newMeetTemp);
     setNewMeet({
       date: "",
       guests: "",
       email: "",
-      temp: "",
-      beerAmount: "",
+      climate: "",
+      beerTotal: "",
     });
-    addMeetup(newMeet);
-  };
 
+    //display a done alert for a short period of time
+    setDone(true);
+    setTimeout(() => {
+      setDone(false);
+    }, 3000);
+  };
+ 
   return (
     <Container fluid className="p-3">
       <h3 className="mb-5">Creá un nuevo evento!</h3>
@@ -122,36 +139,6 @@ const NewMeetup = () => {
           </Form.Label>
         </Form.Group>
 
-        {/* hidden inputs to get the amounts */}
-
-        <Form.Group className="displayNone" >
-          <Form.Label>
-            Cerveza
-            <Form.Control
-              type="number"
-              name="beerAmount"
-              value={beerAmount}
-              onChange={handleChange}
-              min={1}
-              disabled
-            />
-          </Form.Label>
-        </Form.Group>
-
-        <Form.Group className="displayNone" >
-          <Form.Label>
-            Temperatura
-            <Form.Control
-              type="number"
-              name="temp"
-              value={temp}
-              onChange={handleChange}
-              min={1}
-              disabled
-            />
-          </Form.Label>
-        </Form.Group>
-
         {beerAmount != 0 && (
           <Alert variant="dark">
             <Alert.Heading>Ya casi estás!</Alert.Heading>
@@ -166,6 +153,16 @@ const NewMeetup = () => {
         <button className="newMeet mt-3" onClick={handleSubmit}>
           Creá tu evento!
         </button>
+
+        {done && (
+          <Alert variant="danger" className="mt-3">
+            <Alert.Heading>Listo!</Alert.Heading>
+            <p>
+              Tu evento ya esta registrado. No te preocupes, nosotros nos vamos
+              a encargar de todo!
+            </p>
+          </Alert>
+        )}
       </Form>
     </Container>
   );

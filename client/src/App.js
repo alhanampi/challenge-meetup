@@ -20,6 +20,7 @@ function App() {
     <AuthState>
       <MeetupState>
         <Router>
+          <div className="appWrapper">
           <Navbar />
           <Switch>
             {/* public routes */}
@@ -31,7 +32,9 @@ function App() {
             <PrivateRoutes exact path="/user" component={LoginHome} />
             <PrivateRoutes exact path="/admin" component={AdminScreen} />
           </Switch>
-          <Footer />
+          </div>
+          {/* <div className="appPush"></div> */}
+          <Footer className="footer" />
         </Router>
       </MeetupState>
     </AuthState>
